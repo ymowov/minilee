@@ -1,8 +1,11 @@
 <div class="row">
-  <div class="col-md-offset-2 col-md-4">
-    <h2>Hello World</h2>
-    <p>
-      The time is now: <%= Time.now %>
-    </p>
+  <div class="col-md-offset-2 col-md-8">
+    <div class="row">
+      <% @posts.each do |post| %>
+      <div class="col-xs-3">
+        <%= image_tag post["images"]["standard_resolution"]["url"] %>
+      </div>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -18,11 +18,11 @@ class InstagramService
   end
 
   def get_tag_time(data)
-    if data["caption"]["text"].include?("##{@tag}")
+    if data["caption"]["text"].downcase.include?("##{@tag}")
       data["caption"]["created_time"]
     else
       data["comments"]["data"].each do |comment|
-        return comment["created_time"] if comment["text"].include?("##{@tag}")
+        return comment["created_time"] if comment["text"].downcase.include?("##{@tag}")
       end
     end
   end
