@@ -1,0 +1,26 @@
+<div class="row collection_create_title">
+  <%= @collection.title %>
+</div>
+<div class="row collection_create_caption">
+  Please choose Instagram posts you want to save into this collection
+</div>
+<%= render partial: "collections/partials/posts_grid" %>
+<div class="row save_posts">
+  <%= form_tag add_posts_collection_path(@collection), method: :post do %>
+    <%= hidden_field_tag :data_str %>
+    <%= submit_tag "Save" , class: "btn btn-primary btn-lg", id: "save-btn" %>
+  <% end %>
+</div>
+
+<% content_for :custom_js do %>
+<script type="text/javascript">
+  $(function(){
+    $(".ig_post").click(function() {
+      if(this.classList.contains("selected"))
+        $(this).removeClass("selected");
+      else
+        $(this).addClass("selected");
+    });
+  })
+</script>
+  <% end %>
