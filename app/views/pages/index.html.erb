@@ -1,11 +1,46 @@
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
     <div class="row">
-      <% @posts.each do |post| %>
-      <div class="col-xs-3">
-        <%= image_tag post["images"]["standard_resolution"]["url"] %>
-      </div>
-      <% end %>
+    <%= simple_form_for @collection, url: collections_path, method: :post do |f| %>
+    <div class="col-md-offset-1 col-md-2">
+      <%= f.input :title, required: true %>
+    </div>
+    <div class="col-md-2">
+      <%= f.input :start_date, as: :string, required: true, input_html: { id: "dpd1" } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.input :end_date, as: :string, required: true, input_html: { id: "dpd2" } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.submit "Search", class: "btn btn-primary" %>
+    </div>
+    <% end %>
     </div>
   </div>
 </div>
+<%= content_for :custom_js do %>
+<script type="text/javascript">
+  $(function(){
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $('#dpd1').datepicker({format: "yyyy/mm/dd"}).on('changeDate', function(ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkout.setValue(newDate);
+      checkin.hide();
+      $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').datepicker({
+      format: "yyyy/mm/dd",
+      onRender: function(date) {
+        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) {
+      checkout.hide();
+    }).data('datepicker');
+  });
+
+</script>
+<% end %>
