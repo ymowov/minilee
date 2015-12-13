@@ -3,18 +3,24 @@ require 'open-uri'
 class InstagramService
   def initialize(params)
     @tag = params[:tag]
-    @start_time = params[:start_time].to_i
-    @end_time = params[:end_time].to_i
+    @start_date = params[:start_date].to_i
+    @end_date = params[:end_date].to_i
   end
 
   def execute
+    data = []
     token = "268837051.1677ed0.ad3f41f335384dc9bc8d5e910e14b81e"
     url = "https://api.instagram.com/v1/tags/#{@tag}/media/recent?access_token=#{token}"
     response = JSON.load(open(url))
-    data = response["data"]
-    data.select do |media|
-      get_tag_time(media).to_i.between?(@start_time, @end_time)
+    response = response["data"]
+    response.each do |media|
+      tag_time = get_tag_time(media).to_i
+      if tag_time.between?(@start_date, @end_date)
+        media["tag_time"] = tag_time
+        data << media
+      end
     end
+    data
   end
 
   def get_tag_time(data)
