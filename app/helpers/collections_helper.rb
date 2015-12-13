@@ -19,7 +19,8 @@ module CollectionsHelper
   end
 
   def media_url(post)
-    is_api_hash?(post) ? post["images"]["standard_resolution"]["url"] : post.url
+    data = is_api_hash?(post) ? post : eval(post.data) # video posts only show image for now
+    data["images"]["standard_resolution"]["url"]
   end
 
   def is_video?(post)

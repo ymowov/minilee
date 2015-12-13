@@ -1,6 +1,11 @@
-<div class="col-xs-3 ig_post" data-param="<%= post_param(post) if is_api_hash?(post) %>">
+<div class="col-xs-3 ig_post <%= "show_post" if params[:action].eql?("show") %>" data-param="<%= post_param(post) if is_api_hash?(post) %>">
   <div class="row ig_post_media">
     <%= image_tag media_url(post) %>
     <%= video_sign if is_video?(post) %>
+    <span class="checkmark">
+      <div class="checkmark_circle"></div>
+      <div class="checkmark_stem"></div>
+      <div class="checkmark_kick"></div>
+  </span>
   </div>
 </div>
