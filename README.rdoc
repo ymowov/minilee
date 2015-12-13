@@ -5,10 +5,8 @@ Ruby version: 2.2.3
 Rails version: 4.2.4
 
 == How to Run
-```
-git clone https://github.com/ymowov/minilee.git
-cd minilee
-bundle install
-rake db:create db:migrate
-rails server
-```
+* git clone https://github.com/ymowov/minilee.git
+* cd minilee
+* bundle install
+* rake db:create db:migrate
+* rails server
