@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :collections do
     member do
       post :add_posts
-    end
-    collection do
-      post :recent_posts
+      get :recent_posts
     end
   end
 end

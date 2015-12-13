@@ -1,10 +1,14 @@
 class CollectionsController < ApplicationController
   def create
-    @collection = Collection.new(collection_params)
-    @collection.end_date = @collection.end_date.end_of_day
-    @collection.save
+    collection = Collection.new(collection_params)
+    collection.end_date = collection.end_date.end_of_day
+    collection.save
+    redirect_to recent_posts_collection_path(collection)
+  end
+
+  def recent_posts
+    @collection = Collection.find(params[:id])
     @posts = get_recent_valid_post_with_instagram_service
-    render :recent_posts
   end
 
   def add_posts
