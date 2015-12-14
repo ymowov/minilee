@@ -13,8 +13,12 @@ class CollectionsController < ApplicationController
 
   def add_posts
     collection = Collection.find(params[:id])
-    posts = Post.create(eval(params[:data_str]))
-    collection.posts << posts
+    posts = []
+    eval(params[:data_str]).each do |param|
+      posts << Post.new(param)
+    end
+    post_ids = Post.import(posts).ids
+    collection.post_ids = collection.post_ids.concat(post_ids)
     redirect_to collection_path(collection)
   end
 
