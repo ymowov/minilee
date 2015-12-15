@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212222605) do
+ActiveRecord::Schema.define(version: 20151215172857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,10 @@ ActiveRecord::Schema.define(version: 20151212222605) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "tag_id"
   end
+
+  add_index "collections", ["tag_id"], name: "index_collections_on_tag_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.string   "url"
@@ -36,5 +39,21 @@ ActiveRecord::Schema.define(version: 20151212222605) do
   end
 
   add_index "posts", ["collection_id"], name: "index_posts_on_collection_id", using: :btree
+
+  create_table "tag_times", force: :cascade do |t|
+    t.integer  "timestamp"
+    t.integer  "timestamp_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "tag_times", ["tag_id"], name: "index_tag_times_on_tag_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
