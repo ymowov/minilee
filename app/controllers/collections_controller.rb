@@ -2,6 +2,8 @@ class CollectionsController < ApplicationController
   def create
     collection = Collection.new(collection_params)
     collection.end_date = collection.end_date.end_of_day
+    tag = Tag.find_or_create_by(title: collection.title.downcase)
+    collection.tag = tag
     collection.save
     redirect_to recent_posts_collection_path(collection)
   end
